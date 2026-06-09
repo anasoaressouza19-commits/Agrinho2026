@@ -1,0 +1,411 @@
+
+### 2. `style.css`
+```css
+/* ==========================================================================
+   CONFIGURAÇÕES GERAIS E VARIÁVEIS (FACILMENTE CUSTOMIZÁVEIS)
+   ========================================================================== */
+:root {
+    /* Paleta de Cores Obrigatória */
+    --cor-azul: #0a3d62;
+    --cor-azul-celeste: #3ea1db;
+    --cor-azul-metalico: #2c3e50;
+    --cor-verde: #27ae60;
+    --cor-amarelo: #f1c40f;
+    --cor-ouro: #d4af37;
+    --cor-branco: #ffffff;
+    --cor-preto: #111111;
+    
+    /* Cores de Apoio Baseadas na Paleta */
+    --bg-claro: #f4f7f6;
+    --text-claro: #333333;
+    --border-suave: #dddddd;
+
+    /* Variáveis de Fontes e Escalonamento Fluido (clamp) */
+    --fonte-principal: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --fs-hero-title: clamp(2rem, 5vw, 3.8rem);
+    --fs-hero-sub: clamp(1rem, 2.5vw, 1.5rem);
+    --fs-h2: clamp(1.5rem, 3.5vw, 2.2rem);
+    --fs-h3: clamp(1.2rem, 2.5vw, 1.6rem);
+    --fs-base: clamp(1rem, 1vw + 0.5rem, 1.15rem);
+
+    /* Espaçamentos, Margens e Arredondamentos Customizáveis */
+    --padding-container: clamp(1rem, 5vw, 4rem);
+    --gap-componentes: clamp(1rem, 3vw, 2.5rem);
+    --raio-borda: 12px;
+    --sombra-suave: 0 4px 20px rgba(0, 0, 0, 0.06);
+    --sombra-premium: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --transicao: cubic-bezier(0.4, 0, 0.2, 1) 0.3s;
+}
+
+/* Modo Escuro - Acionado por JS */
+body.dark-mode {
+    --bg-claro: #1a1a1a;
+    --cor-branco: #242424;
+    --text-claro: #e0e0e0;
+    --cor-azul-metalico: #3e5871;
+    --border-suave: #444444;
+}
+
+/* Reset Técnico Base */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--fonte-principal);
+    font-size: var(--fs-base);
+    line-height: 1.6;
+    background-color: var(--bg-claro);
+    color: var(--text-claro);
+    transition: background-color var(--transicao), color var(--transicao);
+    overflow-x: hidden;
+}
+
+/* Ocultar elementos visualmente para leitores de tela */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    border: 0;
+}
+
+/* Container Estrutural */
+.container-principal {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: var(--padding-container);
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-componentes);
+}
+
+/* ==========================================================================
+   CAIXA FLUTUANTE DE ACESSIBILIDADE
+   ========================================================================== */
+.acessibilidade-container {
+    position: fixed;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    background-color: var(--cor-azul-metalico);
+    padding: 10px;
+    border-radius: var(--raio-borda);
+    box-shadow: var(--sombra-premium);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    z-index: 1000;
+}
+
+.acessibilidade-container button {
+    background-color: var(--cor-branco);
+    color: var(--cor-azul-metalico);
+    border: 2px solid transparent;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transicao);
+}
+
+.acessibilidade-container button:hover,
+.acessibilidade-container button:focus {
+    background-color: var(--cor-verde);
+    color: var(--cor-branco);
+    outline: none;
+    border-color: var(--cor-amarelo);
+}
+
+/* Adjust layout on small mobile screen */
+@media (max-width: 500px) {
+    .acessibilidade-container {
+        top: auto;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+        flex-direction: row;
+        width: max-content;
+    }
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+.hero {
+    position: relative;
+    height: 60vh;
+    min-height: 400px;
+    background: linear-gradient(135deg, var(--cor-azul-metalico), var(--cor-azul)), #2e7d32;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--cor-branco);
+    padding: 20px;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, transparent 20%, rgba(0,0,0,0.4));
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+}
+
+.hero h1 {
+    font-size: var(--fs-hero-title);
+    line-height: 1.2;
+    margin-bottom: 15px;
+    color: var(--cor-branco);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.hero p {
+    font-size: var(--fs-hero-sub);
+    color: var(--cor-amarelo);
+    font-weight: 400;
+    letter-spacing: 1px;
+}
+
+/* ==========================================================================
+   CONTEÚDO TEXTUAL INICIAL E CARDS
+   ========================================================================== */
+.intro-section h2 {
+    font-size: var(--fs-h2);
+    color: var(--cor-azul);
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+body.dark-mode .intro-section h2 {
+    color: var(--cor-azul-celeste);
+}
+
+.intro-section h2::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 60px;
+    height: 4px;
+    background-color: var(--cor-verde);
+    border-radius: 2px;
+}
+
+.intro-section p {
+    margin-bottom: 15px;
+    text-align: justify;
+}
+
+/* ==========================================================================
+   ESTILIZAÇÃO DAS IMAGENS (CONFORME REQUISITOS ESPECÍFICOS)
+   ========================================================================== */
+.imagem-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 15px 0;
+}
+
+.imagem {
+    width: 100%;
+    max-width: 1100px;
+    border-radius: var(--raio-borda);
+    overflow: hidden;
+    box-shadow: var(--sombra-suave);
+    transition: var(--transicao);
+    background-color: var(--cor-azul-metalico);
+    aspect-ratio: 16 / 7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* Placeholder visual simulado caso a imagem não exista */
+.imagem::before {
+    content: 'Espaço reservado para imagem';
+    position: absolute;
+    color: var(--cor-branco);
+    font-weight: bold;
+    opacity: 0.3;
+}
+
+.imagem img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: var(--transicao);
+    z-index: 1;
+}
+
+/* Efeito Hover Premium solicitado */
+.imagem:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-premium);
+}
+
+.imagem:hover img {
+    scale: 1.03;
+}
+
+/* ==========================================================================
+   ACCORDION (SEÇÃO EXPANSÍVEL)
+   ========================================================================== */
+.pilares-section h2 {
+    font-size: var(--fs-h2);
+    color: var(--cor-azul);
+    margin-bottom: 10px;
+}
+
+body.dark-mode .pilares-section h2 {
+    color: var(--cor-azul-celeste);
+}
+
+.section-desc {
+    margin-bottom: 25px;
+}
+
+.accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.accordion-item {
+    background-color: var(--cor-branco);
+    border-radius: var(--raio-borda);
+    box-shadow: var(--sombra-suave);
+    overflow: hidden;
+    border-left: 5px solid var(--cor-verde);
+}
+
+.accordion-header {
+    width: 100%;
+    padding: 20px;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: calc(var(--fs-base) * 1.1);
+    font-weight: 600;
+    color: var(--cor-azul-metalico);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transicao);
+}
+
+body.dark-mode .accordion-header {
+    color: var(--cor-branco);
+}
+
+.accordion-header:hover, .accordion-header:focus {
+    background-color: rgba(39, 174, 96, 0.05);
+    outline: none;
+}
+
+.accordion-header .icon {
+    font-size: 1.4rem;
+    color: var(--cor-verde);
+    transition: var(--transicao);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out, padding 0.4s ease;
+    padding: 0 20px;
+}
+
+.accordion-content p {
+    padding-bottom: 20px;
+    color: var(--text-claro);
+}
+
+/* ==========================================================================
+   GRID INFORMATIVO DE CARDS
+   ========================================================================== */
+.grid-informativo {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--gap-componentes);
+}
+
+.card-info {
+    background-color: var(--cor-branco);
+    padding: 30px;
+    border-radius: var(--raio-borda);
+    box-shadow: var(--sombra-suave);
+    border-top: 4px solid var(--cor-azul-celeste);
+    transition: var(--transicao);
+}
+
+.card-info:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-premium);
+}
+
+.card-info h3 {
+    font-size: var(--fs-h3);
+    color: var(--cor-azul-metalico);
+    margin-bottom: 15px;
+}
+
+body.dark-mode .card-info h3 {
+    color: var(--cor-azul-celeste);
+}
+
+/* ==========================================================================
+   INTERAÇÃO: FORMULÁRIO E COMENTÁRIOS
+   ========================================================================== */
+.grid-interacao {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: var(--gap-componentes);
+    align-items: start;
+}
+
+.formulario-container, .comentarios-container {
+    background-color: var(--cor-branco);
+    padding: 35px;
+    border-radius: var(--raio-borda);
+    box-shadow: var(--sombra-suave);
+}
+
+.form-header h3 {
+    font-size: var(--fs-h3);
+    color: var(--cor-azul);
+    margin-bottom: 5px;
+}
+
+.form-header p {
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+    opacity: 0.8;
+}
+
+.comentarios-container h3 {
+    font-size: var(--fs-h3);
+    color: var(--cor-azul);
+margin-bottom: 5px;}.comentarios-container p {margin-bottom: 20px;font-size: 0.95rem;}/* Elementos de Formulário */.input-group {display: flex;flex-direction: column;gap: 6px;margin-bottom: 18px;}.input-group label {font-size: 0.9rem;font-weight: 600;color: var(--cor-azul-metalico);}body.dark-mode .input-group label {color: var(--cor-branco);}.input-group input, .input-group textarea {width: 100%;padding: 12px 15px;border: 2px solid var(--border-suave);border-radius: 8px;background-color: var(--bg-claro);color: var(--text-claro);font-size: 1rem;font-family: var(--fonte-principal);transition: var(--transicao);}.input-group input:focus, .input-group textarea:focus {outline: none;border-color: var(--cor-azul-celeste);background-color: var(--cor-branco);}.grid-inputs-curtos {display: grid;grid-template-columns: 1fr 2fr;gap: 15px;}.input-group textarea {min-height: 120px;resize: vertical;}/* Botões Modernos */.btn-principal, .btn-secundario {width: 100%;padding: 14px 20px;border: none;border-radius: 8px;font-size: 1rem;font-weight: bold;cursor: pointer;transition: var(--transicao);box-shadow: 0 4px 10px rgba(0,0,0,0.15);}.btn-principal {background: linear-gradient(135deg, var(--cor-verde), #219653);color: var(--cor-branco);}.btn-principal:hover, .btn-principal:focus {box-shadow: 0 6px 15px rgba(39, 174, 96, 0.4);transform: translateY(-2px);}.btn-secundario {background: linear-gradient(135deg, var(--cor-azul-metalico), var(--cor-azul));color: var(--cor-branco);}.btn-secundario:hover, .btn-secundario:focus {box-shadow: 0 6px 15px rgba(44, 62, 80, 0.4);transform: translateY(-2px);}/* Lista Dinâmica de Comentários */.lista-comentarios {margin-top: 25px;display: flex;flex-direction: column;gap: 12px;max-height: 250px;overflow-y: auto;}.item-comentario {background-color: var(--bg-claro);padding: 15px;border-radius: 8px;border-left: 4px solid var(--cor-ouro);font-size: 0.95rem;animation: surgimento 0.4s ease-out forwards;}@keyframes surgimento {from { opacity: 0; transform: translateY(10px); }to { opacity: 1; transform: translateY(0); }}/* ==========================================================================RODAPÉ========================================================================== */.rodape {background-color: var(--cor-preto);color: #999999;padding: 40px 20px;text-align: center;margin-top: 50px;font-size: 0.95rem;}.rodape-content {max-width: 1200px;margin: 0 auto;display: flex;flex-direction: column;gap: 15px;}.frase-agro {color: var(--cor-ouro);font-weight: 600;font-size: 1.1rem;}.referencias a {color: var(--cor-azul-celeste);text-decoration: none;transition: var(--transicao);}.referencias a:hover {color: var(--cor-amarelo);text-decoration: underline;}/* Suporte para resoluções de telas Ultrawide */@media (min-width: 2000px) {:root {--fs-base: 1.3rem;}.container-principal {max-width: 1800px;}}
